@@ -1,6 +1,8 @@
+import io.qameta.allure.restassured.AllureRestAssured;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
+import static listeners.CustomAllureListener.withCustomTemplates;
 import static org.hamcrest.Matchers.is;
 
 public class DemowebshopTests {
@@ -8,6 +10,7 @@ public class DemowebshopTests {
     @Test
     void cartCheck() {
         given()
+                .filter(withCustomTemplates())
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("product_attribute_16_5_4=13&product_attribute_16_6_5=17&" +
                         "product_attribute_16_3_6=18&product_attribute_16_4_7=44" +
@@ -26,6 +29,8 @@ public class DemowebshopTests {
     @Test
     void wishlistCheck() {
         given()
+//              .filter(new AllureRestAssured())  -- общий фильтр
+                .filter(withCustomTemplates())
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("giftcard_2.RecipientName=Max&" +
                         "giftcard_2.RecipientEmail=mm%40mail.ru&" +
@@ -45,6 +50,7 @@ public class DemowebshopTests {
     @Test
     void subscribeCheck() {
         given()
+                .filter(withCustomTemplates())
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("email=kk%40mail.ru")
                 .when()
